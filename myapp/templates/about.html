@@ -3,31 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>About University Club</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'myapp/css/styles.css' %}">
 </head>
 <body>
     <header>
-        <h1>About Our Club</h1>
+        <h1>About University Club</h1>
         <nav>
-            <a href="home.html">Home</a>
-            <a href="about.html">About Us</a>
+            <ul>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+            </ul>
         </nav>
     </header>
-    <section class="club-history">
-        <h2>Our Club History</h2>
-        <p>The University Club was founded in 20XX with the aim of...</p>
-        <ol>
-            <li>Establishing a supportive community for students</li>
-            <li>Promoting academic excellence and personal development</li>
-            <li>Organizing events and activities that enrich student life</li>
-        </ol>
-    </section>
-    <section class="club-activities">
-        <h2>Club Activities</h2>
-        <p>Throughout the years, our club has been actively involved in...</p>
-        <img src="club_activity1.jpg" alt="Club Activity 1">
-        <img src="club_activity2.jpg" alt="Club Activity 2">
-    </section>
+    <main>
+        <section>
+            <h2>Our History and Mission</h2>
+            <p>The University Club was founded with the mission to promote intellectual curiosity, cultural diversity, and personal growth among its members. We aim to create a supportive and inclusive environment where students can thrive academically and socially.</p>
+        </section>
+        <section>
+            <h2>Club Achievements</h2>
+            <p>Throughout the years, the University Club has achieved significant milestones and received recognition for its contributions to the university community. Some of our notable achievements include:</p>
+            <ol>
+                <li>Founding of the club</li>
+                <li>First annual conference</li>
+                <li>Launch of mentorship program</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Club Activities</h2>
+            <p>Our club is actively involved in organizing various events and activities to enrich the academic and social experiences of our members. Here are some images that illustrate our club's activities:</p>
+            <img src="{% static 'myapp/images/activity1.jpg' %}" alt="Activity 1">
+            <img src="{% static 'myapp/images/activity2.jpg' %}" alt="Activity 2">
+            <img src="{% static 'myapp/images/activity3.jpg' %}" alt="Activity 3">
+            <img src="{% static 'myapp/images/activity4.jpg' %}" alt="Activity 4">
+        </section>
+    </main>
 </body>
 </html>
