@@ -11,4 +11,12 @@ def index(request):
     for book in booklist:
         para = '<p>'+ str(book.id) + ': ' + str(book) + '</p>'
         response.write(para)
+
+    # List of publishers sorted by city name in descending order
+    publisherlist = Publisher.objects.all().order_by('city')
+    heading2 = '<p>' + 'List of publishers: ' + '</p>'
+    response.write(heading2)
+    for publisher in publisherlist:
+        para = '<p>' + str(publisher.name) + ': ' + str(publisher.city) + '</p>'
+        response.write(para)
     return response
