@@ -1,6 +1,7 @@
 # Import necessary classes
 from django.http import HttpResponse
 from .models import Publisher, Book, Member, Order
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 def index(request):
@@ -19,4 +20,18 @@ def index(request):
     for publisher in publisherlist:
         para = '<p>' + str(publisher.name) + ': ' + str(publisher.city) + '</p>'
         response.write(para)
+    return response
+
+def about(request):
+    return HttpResponse("This is an eBook APP.")
+
+def detail(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    response = HttpResponse()
+    heading = '<h1>' + book.title.upper() + '</h1>'
+    response.write(heading)
+    price = '<p>' + 'Price: $' + str(book.price) + '</p>'
+    response.write(price)
+    publisher = '<p>' + 'Publisher: ' + str(book.publisher) + '</p>'
+    response.write(publisher)
     return response
