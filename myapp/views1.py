@@ -2,6 +2,7 @@
 from django.http import HttpResponse
 from .models import Publisher, Book, Member, Order
 from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 
 # Create your views here.
 def index(request):
@@ -21,6 +22,8 @@ def index(request):
         para = '<p>' + str(publisher.name) + ': ' + str(publisher.city) + '</p>'
         response.write(para)
     return response
+
+
 
 def about(request):
     return HttpResponse("This is an eBook APP.")
