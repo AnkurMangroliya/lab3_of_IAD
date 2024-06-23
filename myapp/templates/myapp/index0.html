@@ -1,3 +1,24 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>eBook App</title>#}
+{#</head>#}
+{#<body>#}
+{#    {% if booklist %}#}
+{#        <h2>List of Books</h2>#}
+{#        <ol>#}
+{#            {% for book in booklist %}#}
+{#                <li>{{ book.title }}</li>#}
+{#            {% endfor %}#}
+{#        </ol>#}
+{#    {% else %}#}
+{#        <strong>There are no available books!</strong>#}
+{#    {% endif %}#}
+{#    <p><a href="{% url 'myapp:about' %}">About page</a></p>#}
+{#</body>#}
+{#</html>#}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,16 +26,19 @@
     <title>eBook App</title>
 </head>
 <body>
+
     {% if booklist %}
         <h2>List of Books</h2>
         <ol>
             {% for book in booklist %}
-                <li>{{ book.title }}</li>
+                <li><a href="{% url 'myapp:detail' book.id %}">{{ book.title }}</a></li>
             {% endfor %}
         </ol>
     {% else %}
         <strong>There are no available books!</strong>
     {% endif %}
+
     <p><a href="{% url 'myapp:about' %}">About page</a></p>
+
 </body>
 </html>
