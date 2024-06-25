@@ -12,7 +12,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('home.html', views.home, name='home_html'),
     path('about.html', views.about, name='about_html'),
-
+    path('<int:book_id>/', views.detail, name='detail'),
+    path('feedback/', views.getFeedback, name='feedback1'),
 ]
 
 if settings.DEBUG:

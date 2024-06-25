@@ -1,0 +1,10 @@
+{% extends 'myapp/base.html' %}
+
+{% block title %}Book Details{% endblock %}
+
+{% block body_block %}
+    <h2>{{ book.title }}</h2>
+    <p>Price: ${{ book.price }}</p>
+    <p>Publisher: {{ book.publisher.name }}</p>
+    <p><a href="{% url 'myapp:index' %}">Back to Home</a></p>
+{% endblock %}
