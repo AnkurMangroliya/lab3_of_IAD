@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from .models import Book,Order
 
 class FeedbackForm(forms.Form):
     FEEDBACK_CHOICES = [
@@ -22,3 +22,13 @@ class SearchForm(forms.Form):
         label='Select a category:'
     )
     max_price = forms.IntegerField(label='Maximum Price', min_value=0)
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['books', 'member', 'order_type']
+        widgets = {
+            'books': forms.CheckboxSelectMultiple(),
+            'order_type': forms.RadioSelect
+        }
+        labels = {'member': 'Member name'}

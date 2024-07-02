@@ -32,7 +32,7 @@ class Book(models.Model):
     publisher = models.ForeignKey(Publisher, related_name='books', on_delete=models.CASCADE)
     description = models.TextField(blank=True)
 
-    def str(self):
+    def __str__(self):
         return self.title
 
 # Member model

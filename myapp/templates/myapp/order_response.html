@@ -1,0 +1,11 @@
+<!-- myapp/templates/myapp/order_response.html -->
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <p>Order placed successfully for the following books:</p>
+    <ul>
+        {% for book in order.books.all %}
+            <li>{{ book.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

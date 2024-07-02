@@ -6,7 +6,7 @@ from .models import Publisher, Book, Member, Order
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import render
-from .forms import FeedbackForm, SearchForm
+from .forms import FeedbackForm, SearchForm, OrderForm
 
 def home(request):
     return render(request, 'home.html')
@@ -57,3 +57,26 @@ def findbooks(request):
     else:
         form = SearchForm()
         return render(request, 'myapp/findbooks.html', {'form': form})
+
+
+def place_order(request):
+    if request.method == 'POST':
+        form = OrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.save()
+            form.save_m2m()  # Save the many-to-many data for the form
+
+            member = order.member
+            order_type = order.order_type
+
+            if order_type == 1:  # Assuming 1 represents borrowing
+                for book in order.books.all():
+                    member.borrowed_books.add(book)
+
+            return render(request, 'myapp/order_response.html', {'order': order})
+        else:
+            return render(request, 'myapp/placeorder.html', {'form': form})
+    else:
+        form = OrderForm()
+        return render(request, 'myapp/placeorder.html', {'form': form})

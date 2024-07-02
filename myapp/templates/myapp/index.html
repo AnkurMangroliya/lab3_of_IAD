@@ -1,19 +1,12 @@
-
+<!-- myapp/templates/myapp/index.html -->
 {% extends 'myapp/base.html' %}
 
-{% block title %}Main Page{% endblock %}
-
-{% block myhdg %}Hello{% endblock %}
-
 {% block body_block %}
-    {% if booklist %}
-        <h2>List of Books</h2>
-        <ol>
-            {% for book in booklist %}
-                <li><a href="{% url 'myapp:detail' book.id %}">{{ book.title }}</a></li>
-            {% endfor %}
-        </ol>
-    {% else %}
-        <strong>There are no available books!</strong>
-    {% endif %}
+    <h1>Welcome to the Bookstore</h1>
+    <ul>
+        <li><a href="{% url 'myapp:about' %}">About</a></li>
+        <li><a href="{% url 'myapp:findbooks' %}">Find Books</a></li>
+        <li><a href="{% url 'myapp:place_order' %}">Place Order</a></li>
+        <li><a href="{% url 'myapp:feedback1' %}">Give Feedback</a></li>
+    </ul>
 {% endblock %}
