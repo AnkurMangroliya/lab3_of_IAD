@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {#<!DOCTYPE html>#}
 {#<html lang="en">#}
 {#<head>#}
@@ -19,6 +20,8 @@
 {#</body>#}
 {#</html>#}
 
+=======
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,19 +29,32 @@
     <title>eBook App</title>
 </head>
 <body>
+<<<<<<< HEAD
 
+=======
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
     {% if booklist %}
         <h2>List of Books</h2>
         <ol>
             {% for book in booklist %}
+<<<<<<< HEAD
                 <li><a href="{% url 'myapp:detail' book.id %}">{{ book.title }}</a></li>
+=======
+                <li>{{ book.title }}</li>
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
             {% endfor %}
         </ol>
     {% else %}
         <strong>There are no available books!</strong>
     {% endif %}
+<<<<<<< HEAD
 
     <p><a href="{% url 'myapp:about' %}">About page</a></p>
 
 </body>
 </html>
+=======
+    <p><a href="{% url 'myapp:about' %}">About page</a></p>
+</body>
+</html>
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc

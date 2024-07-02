@@ -3,5 +3,9 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.10 (mysiteS24)" />
   </component>
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (mysiteS24)" project-jdk-type="Python SDK" />
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (mysiteS24)" project-jdk-type="Python SDK" />
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
 </project>

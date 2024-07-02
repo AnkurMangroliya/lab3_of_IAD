@@ -5,18 +5,27 @@ from django.http import HttpResponse
 from .models import Publisher, Book, Member, Order
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
+<<<<<<< HEAD
 from .forms import FeedbackForm
 from .forms import SearchForm
+=======
+from django.shortcuts import render
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
 
 def home(request):
     return render(request, 'home.html')
 
 def about(request):
+<<<<<<< HEAD
     return render(request, 'myapp/about.html')
+=======
+    return render(request, 'myapp/about0.html')
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
 
 
 def index(request):
     booklist = Book.objects.all().order_by('id')[:10]
+<<<<<<< HEAD
     return render(request, 'myapp/index.html', {'booklist': booklist})
 
 def detail(request, book_id):
@@ -64,3 +73,6 @@ def findbooks(request):
     else:
         form = SearchForm()
         return render(request, 'myapp/findbooks.html', {'form': form})
+=======
+    return render(request, 'myapp/index0.html', {'booklist': booklist})
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc

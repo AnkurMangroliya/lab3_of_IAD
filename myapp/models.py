@@ -31,7 +31,10 @@ class Book(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     publisher = models.ForeignKey(Publisher, related_name='books', on_delete=models.CASCADE)
     description = models.TextField(blank=True)
+<<<<<<< HEAD
     address = models.TextField(blank=True)
+=======
+>>>>>>> ce204b837a20845cd59a0f8bbd40be31aa47f5fc
 
     def str(self):
         return self.title
