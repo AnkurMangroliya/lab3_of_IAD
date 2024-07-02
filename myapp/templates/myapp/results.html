@@ -1,0 +1,20 @@
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <p>Hello {{ name }}</p>
+    {% if category %}
+        <p>Category: {{ category }}</p>
+    {% else %}
+        <p>No specific category selected.</p>
+    {% endif %}
+    {% if booklist %}
+        <h2>List of Books</h2>
+        <ol>
+            {% for book in booklist %}
+                <li>{{ book.title }} - ${{ book.price }}</li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>No books available in this category.</p>
+    {% endif %}
+{% endblock %}
