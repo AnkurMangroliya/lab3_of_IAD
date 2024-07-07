@@ -7,6 +7,9 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.shortcuts import render
 from .forms import FeedbackForm, SearchForm, OrderForm
+from django.shortcuts import render, redirect
+from .forms import OrderForm, ReviewForm
+from .models import Book
 
 def home(request):
     return render(request, 'home.html')
@@ -80,3 +83,29 @@ def place_order(request):
     else:
         form = OrderForm()
         return render(request, 'myapp/placeorder.html', {'form': form})
+
+def review(request):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            rating = form.cleaned_data['rating']
+            if 1 <= rating <= 5:
+                review = form.save(commit=False)
+                review.save()
+
+                # Increment num_reviews of the book
+                book = review.book
+                book.num_reviews += 1
+                book.save()
+
+                return redirect('myapp:index')
+            else:
+                return render(request, 'myapp/review.html', {
+                    'form': form,
+                    'error': 'You must enter a rating between 1 and 5!'
+                })
+        else:
+            return render(request, 'myapp/review.html', {'form': form})
+    else:
+        form = ReviewForm()
+        return render(request, 'myapp/review.html', {'form': form})
