@@ -4,9 +4,10 @@
 {% block body_block %}
     <h1>Welcome to the Bookstore</h1>
     <ul>
+        <li><a href="{% url 'myapp:index' %}">Home</a></li>
         <li><a href="{% url 'myapp:about' %}">About</a></li>
+        <li><a href="{% url 'myapp:place_order' %}">Place an Order</a></li>
         <li><a href="{% url 'myapp:findbooks' %}">Find Books</a></li>
-        <li><a href="{% url 'myapp:place_order' %}">Place Order</a></li>
         <li><a href="{% url 'myapp:feedback1' %}">Give Feedback</a></li>
     </ul>
 {% endblock %}

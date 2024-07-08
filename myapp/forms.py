@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book,Order
+from myapp.models import Order, Review, Book
 
 class FeedbackForm(forms.Form):
     FEEDBACK_CHOICES = [
@@ -31,4 +31,18 @@ class OrderForm(forms.ModelForm):
             'books': forms.CheckboxSelectMultiple(),
             'order_type': forms.RadioSelect
         }
-        labels = {'member': 'Member name'}
+        labels = {
+            'member': u'Member name',
+        }
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['reviewer', 'book', 'rating', 'comments']
+        widgets = {
+            'book': forms.RadioSelect()
+        }
+        labels = {
+            'reviewer': 'Please enter a valid email',
+            'rating': 'Rating: An integer between 1 (worst) and 5 (best)',
+        }

@@ -2,9 +2,10 @@
 {% extends 'myapp/base.html' %}
 
 {% block body_block %}
-    <p>Order placed successfully for the following books:</p>
+    <h2>Order Placed Successfully!</h2>
+    <p>Books ordered:</p>
     <ul>
-        {% for book in order.books.all %}
+        {% for book in books %}
             <li>{{ book.title }}</li>
         {% endfor %}
     </ul>
