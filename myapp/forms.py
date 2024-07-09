@@ -6,7 +6,7 @@ class FeedbackForm(forms.Form):
         ('B', 'Borrow'),
         ('P', 'Purchase'),
     ]
-    feedback = forms.ChoiceField(choices=FEEDBACK_CHOICES)
+    feedback = forms.MultipleChoiceField(choices=FEEDBACK_CHOICES)
 
 class SearchForm(forms.Form):
     name = forms.CharField(label='Your Name', required=False)
