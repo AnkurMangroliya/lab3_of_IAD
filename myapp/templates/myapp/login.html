@@ -1,0 +1,14 @@
+<!-- myapp/templates/myapp/login.html -->
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <h2>Login</h2>
+    <form method="post" action="{% url 'myapp:login' %}">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}

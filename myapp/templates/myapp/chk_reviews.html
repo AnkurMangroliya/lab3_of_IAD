@@ -1,0 +1,11 @@
+<!-- myapp/templates/myapp/chk_reviews.html -->
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    <h2>Check Reviews</h2>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
+        <p>The average rating for "{{ book.title }}" is {{ avg_rating }}</p>
+    {% endif %}
+{% endblock %}
