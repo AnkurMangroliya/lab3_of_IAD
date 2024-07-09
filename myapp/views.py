@@ -61,6 +61,7 @@ def place_order(request):
             member = order.member
             order_type = order.order_type
             order.save()
+            form.save_m2m()
             if order_type == 1:
                 for b in order.books.all():
                     member.borrowed_books.add(b)
