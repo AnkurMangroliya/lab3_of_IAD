@@ -1,4 +1,3 @@
-
 from .forms import ReviewForm
 from django.shortcuts import render, HttpResponseRedirect, reverse, HttpResponse
 from django.http import HttpResponse
@@ -10,7 +9,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .forms import FeedbackForm, SearchForm, OrderForm
 from django.shortcuts import redirect
-
+from django.db.models import Avg
+import random
+from datetime import datetime, timedelta
 
 
 def home(request):
@@ -18,12 +19,24 @@ def home(request):
 
 
 def about(request):
-    return render(request, 'myapp/about.html')
+    lucky_num = request.COOKIES.get('lucky_num')
+    if lucky_num is None:
+        lucky_num = random.randint(1, 100)
+        response = render(request, 'myapp/about.html', {'mynum': lucky_num})
+        response.set_cookie('lucky_num', lucky_num, max_age=300)
+        return response
+    else:
+        return render(request, 'myapp/about.html', {'mynum': lucky_num})
 
 
 def index(request):
     booklist = Book.objects.all().order_by('id')[:10]
-    return render(request, 'myapp/index.html', {'booklist': booklist})
+    last_login = request.session.get('last_login')
+    if last_login:
+        message = f"Your last login was on {last_login}"
+    else:
+        message = "Your last login was more than one hour ago"
+    return render(request, 'myapp/index.html', {'booklist': booklist, 'message': message})
 
 
 def detail(request, book_id):
@@ -77,7 +90,7 @@ def place_order(request):
                 for book in order.books.all():
                     member.borrowed_books.add(book)
 
-            return render(request, 'myapp/order_response.html', {'books':books,'order': order})
+            return render(request, 'myapp/order_response.html', {'books': books, 'order': order})
         else:
             return render(request, 'myapp/placeorder.html', {'form': form})
     else:
@@ -102,14 +115,18 @@ def review(request):
         form = ReviewForm()
     return render(request, 'myapp/review.html', {'form': form})
 
+
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST['username']
+        password = request.POST['password']
         user = authenticate(username=username, password=password)
         if user:
             if user.is_active:
                 login(request, user)
+                # Store the login time in the session
+                request.session['last_login'] = str(datetime.now())
+                request.session.set_expiry(3600)  # 1 hour
                 return HttpResponseRedirect(reverse('myapp:index'))
             else:
                 return HttpResponse('Your account is disabled.')
@@ -118,28 +135,25 @@ def user_login(request):
     else:
         return render(request, 'myapp/login.html')
 
+
 @login_required
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('myapp:index'))
 
+
 @login_required
 def chk_reviews(request, book_id):
     user = request.user
-    book = get_object_or_404(Book, pk=book_id)
-
-    if isinstance(user, Member):
-        reviews = Review.objects.filter(book=book)
-        if reviews.exists():
-            average_rating = reviews.aggregate(avg_rating=Avg('rating'))['avg_rating']
-            context = {
-                'average_rating': average_rating,
-                'book': book,
-            }
-            return render(request, 'myapp/chk_reviews.html', context)
+    try:
+        member = Member.objects.get(pk=user.pk)
+        book = get_object_or_404(Book, pk=book_id)
+        avg_rating = Review.objects.filter(book=book).aggregate(Avg('rating'))['rating__avg']
+        if avg_rating is not None:
+            context = {'avg_rating': avg_rating, 'book': book}
         else:
-            message = 'No reviews submitted for this book.'
-            return render(request, 'myapp/chk_reviews.html', {'message': message})
-    else:
-        message = 'You are not a registered member!'
-        return render(request, 'myapp/chk_reviews.html', {'message': message})
+            context = {'message': 'No reviews for this book yet.', 'book': book}
+    except Member.DoesNotExist:
+        context = {'message': 'You are not a registered member!'}
+
+    return render(request, 'myapp/chk_reviews.html', context)
