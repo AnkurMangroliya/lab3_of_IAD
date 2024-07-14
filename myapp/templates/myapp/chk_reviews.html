@@ -1,0 +1,11 @@
+<!-- myapp/templates/myapp/index.html -->
+{% extends 'myapp/base.html' %}
+
+{% block body_block %}
+    {% if message %}
+        <p>{{ message }}</p>
+    {% else %}
+        <h1>Average Rating for {{ book.title }}</h1>
+        <p>{{ average_rating }}</p>
+    {% endif %}
+{% endblock %}
