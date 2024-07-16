@@ -144,15 +144,16 @@ def user_logout(request):
 @login_required
 def chk_reviews(request, book_id):
     user = request.user
-    try:
-        member = Member.objects.get(pk=user.pk)
-        book = get_object_or_404(Book, pk=book_id)
-        avg_rating = Review.objects.filter(book=book).aggregate(Avg('rating'))['rating__avg']
-        if avg_rating is not None:
-            context = {'avg_rating': avg_rating, 'book': book}
-        else:
-            context = {'message': 'No reviews for this book yet.', 'book': book}
-    except Member.DoesNotExist:
+    if not hasattr(user, 'member'):
         context = {'message': 'You are not a registered member!'}
+        return render(request, 'myapp/chk_reviews.html', context)
+
+    book = get_object_or_404(Book, pk=book_id)
+    avg_rating = Review.objects.filter(book=book).aggregate(Avg('rating'))['rating__avg']
+
+    context = {
+        'book': book,
+        'avg_rating': avg_rating if avg_rating is not None else 'No reviews for this book yet.'
+    }
 
     return render(request, 'myapp/chk_reviews.html', context)
