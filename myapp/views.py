@@ -124,9 +124,8 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                # Store the login time in the session
                 request.session['last_login'] = str(datetime.now())
-                request.session.set_expiry(3600)  # 1 hour
+                request.session.set_expiry(3600)
                 return HttpResponseRedirect(reverse('myapp:index'))
             else:
                 return HttpResponse('Your account is disabled.')

@@ -9,7 +9,7 @@
 
 <body>
     <div>
-        <h1>{% block myhdg %}Hello User{% endblock %}</h1>
+        <h1>{% block myhdg %}Hello {% if user.is_authenticated %}{{ user.username }}{% else %}User{% endif %}{% endblock %}</h1>
         {% block body_block %}***{% endblock %}
     </div>
     <hr />
